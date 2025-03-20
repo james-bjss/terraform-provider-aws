@@ -190,7 +190,7 @@ func (r *resourcePackageGroup) Create(ctx context.Context, req resource.CreateRe
 
 	restrictionsMap := make(map[string]awstypes.PackageGroupOriginRestrictionMode)
 	for _, restriction := range restrictions {
-		restrictionsMap[restriction.MapBlockKey.ValueString()] = awstypes.PackageGroupOriginRestrictionMode(restriction.Mode.ValueString()) // ✅ Use Type as the key
+		restrictionsMap[restriction.MapBlockKey.ValueString()] = awstypes.PackageGroupOriginRestrictionMode(restriction.Mode.ValueString())
 	}
 
 	var allowedRepositories []awstypes.PackageGroupAllowedRepository
@@ -202,8 +202,8 @@ func (r *resourcePackageGroup) Create(ctx context.Context, req resource.CreateRe
 		restriction.Repositories.ElementsAs(ctx, &repositories, false)
 		for _, repo := range repositories {
 			allowedRepositories = append(allowedRepositories, awstypes.PackageGroupAllowedRepository{
-				OriginRestrictionType: awstypes.PackageGroupOriginRestrictionType(restriction.MapBlockKey.ValueString()), // ✅ Use restriction type
-				RepositoryName:        aws.String(repo.ValueString()),                                                    // ✅ Use repository name
+				OriginRestrictionType: awstypes.PackageGroupOriginRestrictionType(restriction.MapBlockKey.ValueString()),
+				RepositoryName:        aws.String(repo.ValueString()),
 			})
 		}
 	}
@@ -430,5 +430,5 @@ type packageOriginConfigurationModel struct {
 	Domain       types.String            `tfsdk:"domain"`
 	DomainOwner  types.String            `tfsdk:"domain_owner"`
 	PackageGroup types.String            `tfsdk:"package_group"`
-	Restrictions map[string]types.String `tfsdk:"restrictions"` // ✅ Ensure it matches AWS format
+	Restrictions map[string]types.String `tfsdk:"restrictions"`
 }
